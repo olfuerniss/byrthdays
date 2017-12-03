@@ -6,8 +6,8 @@
 //  Copyright © 2017 Oliver Fürniß. All rights reserved.
 //
 
-#import "Byrthday.h"
+#import "ByrthdayPerson.h"
 
-@implementation Byrthday
+@implementation ByrthdayPerson
 
 @end

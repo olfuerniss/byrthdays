@@ -53,7 +53,7 @@ int main(int argc, const char * argv[]) {
         
         // extract the byrthdays from the contacts
         Byrthdays *byrthdayz = [[Byrthdays alloc] initWithCalendar:calendar];
-        NSArray *byrthdays = [byrthdayz byrthdaysWithinTheNextDays:withinDays];
+        NSArray *byrthdays = [byrthdayz byrthdayPeopleWithinTheNextDays:withinDays];
 
         // print the response in the requested output format
         if([output isEqualToString:@"json"]) {
@@ -68,7 +68,7 @@ int main(int argc, const char * argv[]) {
 void printJSON(NSArray *byrthdays, NSDateFormatter *dateFormatter) {
     NSMutableString *resp = [[NSMutableString alloc] init];
     [resp appendString:@"["];
-    [byrthdays enumerateObjectsUsingBlock:^(Byrthday *byrthday, NSUInteger idx, BOOL *stop) {
+    [byrthdays enumerateObjectsUsingBlock:^(ByrthdayPerson *byrthday, NSUInteger idx, BOOL *stop) {
         [resp appendString:@"{"];
         [resp appendJsonField:@"uid" stringValue:[byrthday uniqueId]];
         [resp appendString:@","];
@@ -98,7 +98,7 @@ void printJSON(NSArray *byrthdays, NSDateFormatter *dateFormatter) {
 }
 
 void printPretty(NSArray *byrthdays, NSDateFormatter *dateFormatter) {
-    for(Byrthday *byrthday in byrthdays) {
+    for(ByrthdayPerson *byrthday in byrthdays) {
         if(byrthday.daysToBirthday == 0) {
             nsprintf(@"%@: %@ %@ will be %ld today \n", [dateFormatter stringFromDate:byrthday.nextBirthdayDate], byrthday.firstName, byrthday.lastName, byrthday.age);
         } else if(byrthday.daysToBirthday == 1) {

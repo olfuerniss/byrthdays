@@ -49,15 +49,15 @@ NSInteger CompareDates(id person1, id person2, void *context) {
 
 #pragma mark - Birthday logic
 
-- (NSArray *) byrthdaysWithinTheNextDays:(NSInteger)days {
-    NSArray *byrthdayPersons = [self processPersons:[self addressBookPersonsWithExistingBirthday]];
+- (NSArray *) byrthdayPeopleWithinTheNextDays:(NSInteger)days {
+    NSArray *byrthdayPeople = [self allByrthdayPeople];
     
     if(days < 0) {
-        return byrthdayPersons;
+        return byrthdayPeople;
     }
     
     NSMutableArray *results = [NSMutableArray array];
-    for(Byrthday *byrthdayPerson in byrthdayPersons) {
+    for(ByrthdayPerson *byrthdayPerson in byrthdayPeople) {
         if([byrthdayPerson daysToBirthday] <= days) {
             [results addObject:byrthdayPerson];
         } else {
@@ -69,17 +69,6 @@ NSInteger CompareDates(id person1, id person2, void *context) {
 }
 
 #pragma mark - Utility methods
-
-- (NSArray *) addressBookPersonsWithExistingBirthday {
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:10];
-    for(ABPerson *person in [[ABAddressBook sharedAddressBook] people]) {
-        NSDateComponents *birthdayComponent = [person valueForProperty:kABBirthdayComponentsProperty];
-        if (birthdayComponent != nil) {
-            [result addObject:person];
-        }
-    }
-    return result;
-}
 
 - (NSInteger) daysBetween:(NSDate *)fromDate andDate:(NSDate *)toDate {
     NSDateComponents *components = [self.calendar components:(NSCalendarUnitDay) fromDate:fromDate toDate:toDate options:0];
@@ -97,7 +86,16 @@ NSInteger CompareDates(id person1, id person2, void *context) {
                            nanosecond:0];
 }
 
-- (NSArray *) processPersons:(NSArray *)persons {
+- (NSArray *) allByrthdayPeople {
+    // get the persons with birthdays from the address book
+    NSMutableArray *people = [NSMutableArray arrayWithCapacity:10];
+    for(ABPerson *person in [[ABAddressBook sharedAddressBook] people]) {
+        NSDateComponents *birthdayComponent = [person valueForProperty:kABBirthdayComponentsProperty];
+        if (birthdayComponent != nil) {
+            [people addObject:person];
+        }
+    }
+
     // get the current date
     NSDate *todaysDate = [NSDate date];
     NSDateComponents *todaysDateComponents = [self.calendar components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:todaysDate];
@@ -106,29 +104,29 @@ NSInteger CompareDates(id person1, id person2, void *context) {
     ABPerson *me = [[ABAddressBook sharedAddressBook] me];
     
     // sort the given persons ascending by their birthdays
-    NSArray *sortedPersons = [persons sortedArrayUsingFunction:CompareDates context:NULL];
+    NSArray *sortedPeople = [people sortedArrayUsingFunction:CompareDates context:NULL];
     
     // add the persons with birthdays coming next in this year, then those in the next year
-    NSMutableArray *thisYearPersons = [NSMutableArray arrayWithCapacity:[sortedPersons count]];
-    NSMutableArray *nextYearPersons = [NSMutableArray arrayWithCapacity:[sortedPersons count]];
+    NSMutableArray *thisYearPeople = [NSMutableArray arrayWithCapacity:[sortedPeople count]];
+    NSMutableArray *nextYearPeople = [NSMutableArray arrayWithCapacity:[sortedPeople count]];
     
-    for(ABPerson *person in sortedPersons) {
+    for(ABPerson *person in sortedPeople) {
         NSDateComponents *birthdayDateComponents = [person valueForProperty:kABBirthdayComponentsProperty];
         if(([birthdayDateComponents month] == [todaysDateComponents month] && [birthdayDateComponents day] >= [todaysDateComponents day]) || [birthdayDateComponents month] > [todaysDateComponents month]) {
-            [thisYearPersons addObject:person];
+            [thisYearPeople addObject:person];
         } else {
-            [nextYearPersons addObject:person];
+            [nextYearPeople addObject:person];
         }
     }
     
-    NSMutableArray *reorderedPersons = [NSMutableArray arrayWithCapacity:[sortedPersons count]];
-    [reorderedPersons addObjectsFromArray:thisYearPersons];
-    [reorderedPersons addObjectsFromArray:nextYearPersons];
+    NSMutableArray *reorderedPeople = [NSMutableArray arrayWithCapacity:[sortedPeople count]];
+    [reorderedPeople addObjectsFromArray:thisYearPeople];
+    [reorderedPeople addObjectsFromArray:nextYearPeople];
     
     // create the results array
-    NSMutableArray *results = [NSMutableArray arrayWithCapacity:[reorderedPersons count]];
+    NSMutableArray *results = [NSMutableArray arrayWithCapacity:[reorderedPeople count]];
     
-    for(ABPerson *person in reorderedPersons) {
+    for(ABPerson *person in reorderedPeople) {
         NSString *firstName = [person valueForProperty:kABFirstNameProperty];
         NSString *lastName = [person valueForProperty:kABLastNameProperty];
         NSString *nickname = [person valueForProperty:kABNicknameProperty];
@@ -158,7 +156,7 @@ NSInteger CompareDates(id person1, id person2, void *context) {
                                              andDate:nextBirthdayDate];
         
         // create the Byrthday object
-        Byrthday *byrthday = [[Byrthday alloc] init];
+        ByrthdayPerson *byrthday = [[ByrthdayPerson alloc] init];
         byrthday.me = (me != nil && me == person);
         byrthday.firstName = (firstName ? firstName : @"");
         byrthday.lastName = (lastName ? lastName : @"");

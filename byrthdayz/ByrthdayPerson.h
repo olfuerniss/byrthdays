@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Byrthday : NSObject
+@interface ByrthdayPerson : NSObject
 
 @property (nonatomic, strong) NSString *uniqueId;
 @property (nonatomic, assign) Boolean me;
