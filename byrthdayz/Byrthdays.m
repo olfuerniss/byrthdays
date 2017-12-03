@@ -50,14 +50,13 @@ NSInteger CompareDates(id person1, id person2, void *context) {
 
 #pragma mark - Birthday logic
 
-- (NSArray *) allByrthdays {
-    // return the byrthday persons
-    return [self processPersons:[self addressBookPersonsWithExistingBirthday]];
-}
-
 - (NSArray *) byrthdaysWithinTheNextDays:(NSInteger)days {
     // get the byrthday persons
     NSArray *byrthdayPersons = [self processPersons:[self addressBookPersonsWithExistingBirthday]];
+    
+    if(days < 0) {
+        return byrthdayPersons;
+    }
     
     // get the end date by using the given within days
     NSDate *endDate = [[NSDate date] dateByAddingDays:days];

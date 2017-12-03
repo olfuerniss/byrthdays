@@ -53,15 +53,9 @@ int main(int argc, const char * argv[]) {
         
         // extract the byrthdays from the contacts
         Byrthdays *byrthdayz = [[Byrthdays alloc] initWithCalendar:calendar];
+        NSArray *byrthdays = [byrthdayz byrthdaysWithinTheNextDays:withinDays];
 
-        NSArray *byrthdays;
-        if(withinDays > 0) {
-            byrthdays = [byrthdayz byrthdaysWithinTheNextDays:withinDays];
-        } else {
-            byrthdays = [byrthdayz allByrthdays];
-        }
-
-        // create the response
+        // print the response in the requested output format
         if([output isEqualToString:@"json"]) {
             printJSON(byrthdays, dateFormatter);
         } else {

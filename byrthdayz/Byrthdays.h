@@ -14,7 +14,6 @@
 @property (nonatomic, readonly, strong) NSCalendar *calendar;
 
 - (id) initWithCalendar:(NSCalendar *)calendar;
-- (NSArray *) allByrthdays;
 - (NSArray *) byrthdaysWithinTheNextDays:(NSInteger)days;
 
 @end
