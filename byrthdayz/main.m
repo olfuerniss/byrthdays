@@ -106,7 +106,7 @@ void printJSON(NSArray *byrthdays, NSDateFormatter *dateFormatter) {
 
 void printPretty(NSArray *byrthdays, NSDateFormatter *dateFormatter) {
     for(Byrthday *byrthday in byrthdays) {
-        nsprintf(@"%@: %@ %@ wird %ld in %ld Tagen\n", [dateFormatter stringFromDate:byrthday.nextBirthdayDate], byrthday.firstName, byrthday.lastName, byrthday.age, byrthday.daysToBirthday);
+        nsprintf(@"%@: %@ %@ will be %ld in %ld days\n", [dateFormatter stringFromDate:byrthday.nextBirthdayDate], byrthday.firstName, byrthday.lastName, byrthday.age, byrthday.daysToBirthday);
     }
 }
 
@@ -124,12 +124,12 @@ void help() {
     "Usage: \n"
     "  byrthdays [-d days] [-o format] \n\n"
     "Options: \n"
-    "  -d  extract only the birthdays within the given number of days (default 14) \n"
+    "  -d  extract only birthdays within the given number of days (default 14) \n"
     "  -o  to set the output format. Can be either 'pretty' or 'json' (default 'pretty') \n"
     "  -h  prints this help \n"
     "\n"
     "byrthdays v1.0\n"
-    "Oliver Fürniß, 02/12/2017\n"
+    "Oliver Fürniß, 03/12/2017\n"
     "Website: https://github.com/olfuerniss/byrthdays\n";
     
     nsprintf(help);
