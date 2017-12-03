@@ -123,7 +123,7 @@ void nsprintf(NSString *format, ...) {
 
 void help() {
     NSString *help = @"\n"
-    "Byrthdays is a tool to extract persons with birthdays from your contacts. \n\n"
+    "Byrthdays is a tool to extract people with birthdays from your contacts. \n\n"
     "Usage: \n"
     "  byrthdays [-d days] [-o format] \n\n"
     "Options: \n"
