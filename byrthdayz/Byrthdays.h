@@ -15,5 +15,6 @@
 
 - (id) initWithCalendar:(NSCalendar *)calendar;
 - (NSArray *) byrthdayPeopleWithinTheNextDays:(NSInteger)days;
+- (NSArray *) allByrthdayPeople;
 
 @end
