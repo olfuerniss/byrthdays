@@ -106,7 +106,13 @@ void printJSON(NSArray *byrthdays, NSDateFormatter *dateFormatter) {
 
 void printPretty(NSArray *byrthdays, NSDateFormatter *dateFormatter) {
     for(Byrthday *byrthday in byrthdays) {
-        nsprintf(@"%@: %@ %@ will be %ld in %ld days\n", [dateFormatter stringFromDate:byrthday.nextBirthdayDate], byrthday.firstName, byrthday.lastName, byrthday.age, byrthday.daysToBirthday);
+        if(byrthday.daysToBirthday == 0) {
+            nsprintf(@"%@: %@ %@ will be %ld today \n", [dateFormatter stringFromDate:byrthday.nextBirthdayDate], byrthday.firstName, byrthday.lastName, byrthday.age);
+        } else if(byrthday.daysToBirthday == 1) {
+            nsprintf(@"%@: %@ %@ will be %ld tomorrow \n", [dateFormatter stringFromDate:byrthday.nextBirthdayDate], byrthday.firstName, byrthday.lastName, byrthday.age);
+        } else {
+            nsprintf(@"%@: %@ %@ will be %ld in %ld days \n", [dateFormatter stringFromDate:byrthday.nextBirthdayDate], byrthday.firstName, byrthday.lastName, byrthday.age, byrthday.daysToBirthday);
+        }
     }
 }
 
