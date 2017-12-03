@@ -98,7 +98,6 @@ void printJSON(NSArray *byrthdays, NSDateFormatter *dateFormatter) {
         if(idx+1 < [byrthdays count]) {
             [resp appendString:@","];
         }
-        [resp appendString:@"\n"];
     }];
     [resp appendString:@"]"];
     nsprintf(@"%@", resp);
