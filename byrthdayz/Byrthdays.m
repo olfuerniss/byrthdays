@@ -8,7 +8,6 @@
 
 #import "Byrthdays.h"
 #import <AddressBook/AddressBook.h>
-#import "NSDate+Extension.h"
 
 // Comparison function for sorting returned ABPeople by birthday
 NSInteger CompareDates(id person1, id person2, void *context) {
@@ -51,26 +50,15 @@ NSInteger CompareDates(id person1, id person2, void *context) {
 #pragma mark - Birthday logic
 
 - (NSArray *) byrthdaysWithinTheNextDays:(NSInteger)days {
-    // get the byrthday persons
     NSArray *byrthdayPersons = [self processPersons:[self addressBookPersonsWithExistingBirthday]];
     
     if(days < 0) {
         return byrthdayPersons;
     }
     
-    // get the end date by using the given within days
-    NSDate *endDate = [[NSDate date] dateByAddingDays:days];
-    
-    // must adjust the end date
-    NSDateComponents *endDateComponents = [self.calendar components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:endDate];
-    NSDate *adjustedEndDate = [self comparableDateForDay:[endDateComponents day]
-                                                   month:[endDateComponents month]
-                                                    year:[endDateComponents year]];
-    
-    NSMutableArray *results = [NSMutableArray arrayWithCapacity:3];
+    NSMutableArray *results = [NSMutableArray array];
     for(Byrthday *byrthdayPerson in byrthdayPersons) {
-        // correctly sorted; can be stopped
-        if([[byrthdayPerson nextBirthdayDate] isEarlierThanOrEqualTo:adjustedEndDate]) {
+        if([byrthdayPerson daysToBirthday] <= days) {
             [results addObject:byrthdayPerson];
         } else {
             break;

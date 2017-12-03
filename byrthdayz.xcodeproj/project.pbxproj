@@ -10,7 +10,6 @@
 		AE38CBCA1FCD667A005D1445 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AE38CBC91FCD667A005D1445 /* main.m */; };
 		AE4CE6BB1FCE95030094F0C1 /* Byrthday.m in Sources */ = {isa = PBXBuildFile; fileRef = AE4CE6BA1FCE95030094F0C1 /* Byrthday.m */; };
 		AE6C41DF1FCDD5A900D60356 /* Byrthdays.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C41DE1FCDD5A900D60356 /* Byrthdays.m */; };
-		AEA05FC01FD0192100BEA2BA /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA05FBF1FD0192100BEA2BA /* NSDate+Extension.m */; };
 		AEC2DEB71FD2955000547018 /* NSMutableString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC2DEB61FD2955000547018 /* NSMutableString+Extension.m */; };
 /* End PBXBuildFile section */
 
@@ -33,8 +32,6 @@
 		AE4CE6BA1FCE95030094F0C1 /* Byrthday.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Byrthday.m; sourceTree = "<group>"; };
 		AE6C41DD1FCDD5A900D60356 /* Byrthdays.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Byrthdays.h; sourceTree = "<group>"; };
 		AE6C41DE1FCDD5A900D60356 /* Byrthdays.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Byrthdays.m; sourceTree = "<group>"; };
-		AEA05FBE1FD0192100BEA2BA /* NSDate+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
-		AEA05FBF1FD0192100BEA2BA /* NSDate+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
 		AEC2DEB51FD2955000547018 /* NSMutableString+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableString+Extension.h"; sourceTree = "<group>"; };
 		AEC2DEB61FD2955000547018 /* NSMutableString+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableString+Extension.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,8 +71,6 @@
 				AE6C41DE1FCDD5A900D60356 /* Byrthdays.m */,
 				AE4CE6B91FCE95030094F0C1 /* Byrthday.h */,
 				AE4CE6BA1FCE95030094F0C1 /* Byrthday.m */,
-				AEA05FBE1FD0192100BEA2BA /* NSDate+Extension.h */,
-				AEA05FBF1FD0192100BEA2BA /* NSDate+Extension.m */,
 				AEC2DEB51FD2955000547018 /* NSMutableString+Extension.h */,
 				AEC2DEB61FD2955000547018 /* NSMutableString+Extension.m */,
 			);
@@ -139,7 +134,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AEA05FC01FD0192100BEA2BA /* NSDate+Extension.m in Sources */,
 				AEC2DEB71FD2955000547018 /* NSMutableString+Extension.m in Sources */,
 				AE38CBCA1FCD667A005D1445 /* main.m in Sources */,
 				AE4CE6BB1FCE95030094F0C1 /* Byrthday.m in Sources */,
