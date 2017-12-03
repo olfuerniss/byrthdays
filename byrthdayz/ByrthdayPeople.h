@@ -9,12 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "ByrthdayPerson.h"
 
-@interface Byrthdays : NSObject
+@interface ByrthdayPeople : NSObject
 
 @property (nonatomic, readonly, strong) NSCalendar *calendar;
 
 - (id) initWithCalendar:(NSCalendar *)calendar;
-- (NSArray *) byrthdayPeopleWithinTheNextDays:(NSInteger)days;
-- (NSArray *) allByrthdayPeople;
+- (NSArray *) withinTheNextDays:(NSInteger)days;
+- (NSArray *) all;
 
 @end

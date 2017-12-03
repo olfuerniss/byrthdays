@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		AE38CBCA1FCD667A005D1445 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AE38CBC91FCD667A005D1445 /* main.m */; };
 		AE4CE6BB1FCE95030094F0C1 /* ByrthdayPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = AE4CE6BA1FCE95030094F0C1 /* ByrthdayPerson.m */; };
-		AE6C41DF1FCDD5A900D60356 /* Byrthdays.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C41DE1FCDD5A900D60356 /* Byrthdays.m */; };
+		AE6C41DF1FCDD5A900D60356 /* ByrthdayPeople.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C41DE1FCDD5A900D60356 /* ByrthdayPeople.m */; };
 		AEC2DEB71FD2955000547018 /* NSMutableString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC2DEB61FD2955000547018 /* NSMutableString+Extension.m */; };
 /* End PBXBuildFile section */
 
@@ -30,8 +30,8 @@
 		AE38CBC91FCD667A005D1445 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AE4CE6B91FCE95030094F0C1 /* ByrthdayPerson.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ByrthdayPerson.h; sourceTree = "<group>"; };
 		AE4CE6BA1FCE95030094F0C1 /* ByrthdayPerson.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ByrthdayPerson.m; sourceTree = "<group>"; };
-		AE6C41DD1FCDD5A900D60356 /* Byrthdays.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Byrthdays.h; sourceTree = "<group>"; };
-		AE6C41DE1FCDD5A900D60356 /* Byrthdays.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Byrthdays.m; sourceTree = "<group>"; };
+		AE6C41DD1FCDD5A900D60356 /* ByrthdayPeople.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ByrthdayPeople.h; sourceTree = "<group>"; };
+		AE6C41DE1FCDD5A900D60356 /* ByrthdayPeople.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ByrthdayPeople.m; sourceTree = "<group>"; };
 		AEC2DEB51FD2955000547018 /* NSMutableString+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableString+Extension.h"; sourceTree = "<group>"; };
 		AEC2DEB61FD2955000547018 /* NSMutableString+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableString+Extension.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,8 +67,8 @@
 			isa = PBXGroup;
 			children = (
 				AE38CBC91FCD667A005D1445 /* main.m */,
-				AE6C41DD1FCDD5A900D60356 /* Byrthdays.h */,
-				AE6C41DE1FCDD5A900D60356 /* Byrthdays.m */,
+				AE6C41DD1FCDD5A900D60356 /* ByrthdayPeople.h */,
+				AE6C41DE1FCDD5A900D60356 /* ByrthdayPeople.m */,
 				AE4CE6B91FCE95030094F0C1 /* ByrthdayPerson.h */,
 				AE4CE6BA1FCE95030094F0C1 /* ByrthdayPerson.m */,
 				AEC2DEB51FD2955000547018 /* NSMutableString+Extension.h */,
@@ -137,7 +137,7 @@
 				AEC2DEB71FD2955000547018 /* NSMutableString+Extension.m in Sources */,
 				AE38CBCA1FCD667A005D1445 /* main.m in Sources */,
 				AE4CE6BB1FCE95030094F0C1 /* ByrthdayPerson.m in Sources */,
-				AE6C41DF1FCDD5A900D60356 /* Byrthdays.m in Sources */,
+				AE6C41DF1FCDD5A900D60356 /* ByrthdayPeople.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

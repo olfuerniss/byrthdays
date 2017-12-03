@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Byrthdays.h"
+#import "ByrthdayPeople.h"
 #import "NSMutableString+Extension.h"
 
 void nsprintf(NSString *format, ...);
@@ -52,14 +52,13 @@ int main(int argc, const char * argv[]) {
         [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
         
         // extract the byrthdays from the contacts
-        Byrthdays *byrthdayz = [[Byrthdays alloc] initWithCalendar:calendar];
-        NSArray *byrthdays = [byrthdayz byrthdayPeopleWithinTheNextDays:withinDays];
+        NSArray *byrthdayPeople = [[[ByrthdayPeople alloc] initWithCalendar:calendar] withinTheNextDays:withinDays];
 
         // print the response in the requested output format
         if([output isEqualToString:@"json"]) {
-            printJSON(byrthdays, dateFormatter);
+            printJSON(byrthdayPeople, dateFormatter);
         } else {
-            printPretty(byrthdays, dateFormatter);
+            printPretty(byrthdayPeople, dateFormatter);
         }
     }
     return EXIT_SUCCESS;

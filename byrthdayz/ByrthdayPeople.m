@@ -6,10 +6,10 @@
 //  Copyright © 2017 Oliver Fürniß. All rights reserved.
 //
 
-#import "Byrthdays.h"
+#import "ByrthdayPeople.h"
 #import <AddressBook/AddressBook.h>
 
-@implementation Byrthdays
+@implementation ByrthdayPeople
 
 - (id) initWithCalendar:(NSCalendar *)calendar {
     if (self = [super init]) {
@@ -18,17 +18,17 @@
     return self;
 }
 
-#pragma mark - Birthday logic
+#pragma mark - instance methods
 
-- (NSArray *) byrthdayPeopleWithinTheNextDays:(NSInteger)days {
-    NSArray *byrthdayPeople = [self allByrthdayPeople];
+- (NSArray *) withinTheNextDays:(NSInteger)days {
+    NSArray *allByrthdayPeople = [self all];
     
     if(days < 0) {
-        return byrthdayPeople;
+        return allByrthdayPeople;
     }
     
     NSMutableArray *results = [NSMutableArray array];
-    for(ByrthdayPerson *byrthdayPerson in byrthdayPeople) {
+    for(ByrthdayPerson *byrthdayPerson in allByrthdayPeople) {
         if([byrthdayPerson daysToBirthday] <= days) {
             [results addObject:byrthdayPerson];
         } else {
@@ -39,20 +39,7 @@
     return results;
 }
 
-#pragma mark - Utility methods
-
-- (NSDate *) comparableDateForDay:(NSInteger)day month:(NSInteger)month year:(NSInteger)year {
-    return [self.calendar dateWithEra:1
-                                 year:year
-                                month:month
-                                  day:day
-                                 hour:23
-                               minute:59
-                               second:59
-                           nanosecond:0];
-}
-
-- (NSArray *) allByrthdayPeople {
+- (NSArray *) all {
     // get the current date
     NSDate *todaysDate = [NSDate date];
     NSDateComponents *todaysDateComponents = [self.calendar components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:todaysDate];
@@ -118,6 +105,19 @@
     }];
     
     return people;
+}
+
+#pragma mark - Utility methods
+
+- (NSDate *) comparableDateForDay:(NSInteger)day month:(NSInteger)month year:(NSInteger)year {
+    return [self.calendar dateWithEra:1
+                                 year:year
+                                month:month
+                                  day:day
+                                 hour:23
+                               minute:59
+                               second:59
+                           nanosecond:0];
 }
 
 @end
