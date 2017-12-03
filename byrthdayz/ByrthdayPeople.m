@@ -21,18 +21,20 @@
 #pragma mark - instance methods
 
 - (NSArray *) withinTheNextDays:(NSInteger)days {
-    NSMutableArray *results = [NSMutableArray array];
+    NSMutableArray *result = [NSMutableArray array];
     for(ByrthdayPerson *byrthdayPerson in [self all]) {
         if([byrthdayPerson daysToBirthday] <= days) {
-            [results addObject:byrthdayPerson];
+            [result addObject:byrthdayPerson];
         } else {
             break;
         }
     }
-    return results;
+    return result;
 }
 
 - (NSArray *) all {
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:10];
+
     // get the current date
     NSDate *todaysDate = [NSDate date];
     NSDateComponents *todaysDateComponents = [self.calendar components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear)
@@ -42,7 +44,6 @@
     ABPerson *me = [[ABAddressBook sharedAddressBook] me];
     
     // get the persons with birthdays from the address book
-    NSMutableArray *people = [NSMutableArray arrayWithCapacity:10];
     for(ABPerson *person in [[ABAddressBook sharedAddressBook] people]) {
         NSDateComponents *birthdayDateComponents = [person valueForProperty:kABBirthdayComponentsProperty];
 
@@ -93,16 +94,16 @@
         byrthdayPerson.age = age;
         byrthdayPerson.daysToBirthday = daysToBirthday;
         
-        [people addObject:byrthdayPerson];
+        [result addObject:byrthdayPerson];
     }
     
-    [people sortUsingComparator:^NSComparisonResult(id person1, id person2) {
+    [result sortUsingComparator:^NSComparisonResult(id person1, id person2) {
         NSDate *first = [(ByrthdayPerson *)person1 nextBirthdayDate];
         NSDate *second = [(ByrthdayPerson *)person2 nextBirthdayDate];
         return [first compare:second];
     }];
     
-    return people;
+    return result;
 }
 
 #pragma mark - Utility methods
