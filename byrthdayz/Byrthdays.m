@@ -41,11 +41,6 @@
 
 #pragma mark - Utility methods
 
-- (NSInteger) daysBetween:(NSDate *)fromDate andDate:(NSDate *)toDate {
-    NSDateComponents *components = [self.calendar components:(NSCalendarUnitDay) fromDate:fromDate toDate:toDate options:0];
-    return ABS([components day]);
-}
-
 - (NSDate *) comparableDateForDay:(NSInteger)day month:(NSInteger)month year:(NSInteger)year {
     return [self.calendar dateWithEra:1
                                  year:year
@@ -87,11 +82,18 @@
                                                             month:[birthdayDateComponents month]
                                                              year:birthdayYear];
 
-            // computing the age
+            // compute the age
             NSInteger age = 0;
             if([birthdayDateComponents year] != NSNotFound) {
                 age = birthdayYear - [birthdayDateComponents year];
             }
+            
+            // compute the days to birthday
+            NSDateComponents *components = [self.calendar components:(NSCalendarUnitDay)
+                                                            fromDate:todaysDate
+                                                              toDate:nextBirthdayDate
+                                                             options:0];
+            NSInteger daysToBirthday = ABS([components day]);
 
             // create the byrthday person object
             ByrthdayPerson *byrthdayPerson = [[ByrthdayPerson alloc] init];
@@ -103,7 +105,7 @@
             byrthdayPerson.birthdayDate = birthdayDate;
             byrthdayPerson.nextBirthdayDate = nextBirthdayDate;
             byrthdayPerson.age = age;
-            byrthdayPerson.daysToBirthday = [self daysBetween:todaysDate andDate:nextBirthdayDate];
+            byrthdayPerson.daysToBirthday = daysToBirthday;
             
             [people addObject:byrthdayPerson];
         }
