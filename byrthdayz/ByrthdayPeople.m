@@ -21,28 +21,22 @@
 #pragma mark - instance methods
 
 - (NSArray *) withinTheNextDays:(NSInteger)days {
-    NSArray *allByrthdayPeople = [self all];
-    
-    if(days < 0) {
-        return allByrthdayPeople;
-    }
-    
     NSMutableArray *results = [NSMutableArray array];
-    for(ByrthdayPerson *byrthdayPerson in allByrthdayPeople) {
+    for(ByrthdayPerson *byrthdayPerson in [self all]) {
         if([byrthdayPerson daysToBirthday] <= days) {
             [results addObject:byrthdayPerson];
         } else {
             break;
         }
     }
-    
     return results;
 }
 
 - (NSArray *) all {
     // get the current date
     NSDate *todaysDate = [NSDate date];
-    NSDateComponents *todaysDateComponents = [self.calendar components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:todaysDate];
+    NSDateComponents *todaysDateComponents = [self.calendar components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear)
+                                                              fromDate:todaysDate];
     
     // try to get me
     ABPerson *me = [[ABAddressBook sharedAddressBook] me];
@@ -51,51 +45,55 @@
     NSMutableArray *people = [NSMutableArray arrayWithCapacity:10];
     for(ABPerson *person in [[ABAddressBook sharedAddressBook] people]) {
         NSDateComponents *birthdayDateComponents = [person valueForProperty:kABBirthdayComponentsProperty];
-        if (birthdayDateComponents != nil) {
-            NSString *firstName = [person valueForProperty:kABFirstNameProperty];
-            NSString *lastName = [person valueForProperty:kABLastNameProperty];
-            NSString *nickname = [person valueForProperty:kABNicknameProperty];
-            
-            NSDate *birthdayDate = [self comparableDateForDay:[birthdayDateComponents day]
-                                                        month:[birthdayDateComponents month]
-                                                         year:[birthdayDateComponents day]];
-            
-            // next birthday date
-            NSInteger birthdayYear = [todaysDateComponents year];
-            if(([birthdayDateComponents month] == [todaysDateComponents month] && [birthdayDateComponents day] < [todaysDateComponents day]) || [birthdayDateComponents month] < [todaysDateComponents month])  {
-                birthdayYear++;
-            }
-            NSDate *nextBirthdayDate = [self comparableDateForDay:[birthdayDateComponents day]
-                                                            month:[birthdayDateComponents month]
-                                                             year:birthdayYear];
 
-            // compute the age
-            NSInteger age = 0;
-            if([birthdayDateComponents year] != NSNotFound) {
-                age = birthdayYear - [birthdayDateComponents year];
-            }
-            
-            // compute the days to birthday
-            NSDateComponents *components = [self.calendar components:(NSCalendarUnitDay)
-                                                            fromDate:todaysDate
-                                                              toDate:nextBirthdayDate
-                                                             options:0];
-            NSInteger daysToBirthday = ABS([components day]);
-
-            // create the byrthday person object
-            ByrthdayPerson *byrthdayPerson = [[ByrthdayPerson alloc] init];
-            byrthdayPerson.uniqueId = [person uniqueId];
-            byrthdayPerson.me = (me != nil && me == person);
-            byrthdayPerson.firstName = (firstName ? firstName : @"");
-            byrthdayPerson.lastName = (lastName ? lastName : @"");
-            byrthdayPerson.nickName = (nickname ? nickname : @"");
-            byrthdayPerson.birthdayDate = birthdayDate;
-            byrthdayPerson.nextBirthdayDate = nextBirthdayDate;
-            byrthdayPerson.age = age;
-            byrthdayPerson.daysToBirthday = daysToBirthday;
-            
-            [people addObject:byrthdayPerson];
+        // only people with a birthday set
+        if(birthdayDateComponents == nil) {
+            continue;
         }
+        
+        NSString *firstName = [person valueForProperty:kABFirstNameProperty];
+        NSString *lastName = [person valueForProperty:kABLastNameProperty];
+        NSString *nickname = [person valueForProperty:kABNicknameProperty];
+        
+        NSDate *birthdayDate = [self comparableDateForDay:[birthdayDateComponents day]
+                                                    month:[birthdayDateComponents month]
+                                                     year:[birthdayDateComponents day]];
+        
+        // next birthday date
+        NSInteger birthdayYear = [todaysDateComponents year];
+        if(([birthdayDateComponents month] == [todaysDateComponents month] && [birthdayDateComponents day] < [todaysDateComponents day]) || [birthdayDateComponents month] < [todaysDateComponents month])  {
+            birthdayYear++;
+        }
+        NSDate *nextBirthdayDate = [self comparableDateForDay:[birthdayDateComponents day]
+                                                        month:[birthdayDateComponents month]
+                                                         year:birthdayYear];
+        
+        // compute the age
+        NSInteger age = 0;
+        if([birthdayDateComponents year] != NSNotFound) {
+            age = birthdayYear - [birthdayDateComponents year];
+        }
+        
+        // compute the days to birthday
+        NSDateComponents *components = [self.calendar components:(NSCalendarUnitDay)
+                                                        fromDate:todaysDate
+                                                          toDate:nextBirthdayDate
+                                                         options:0];
+        NSInteger daysToBirthday = ABS([components day]);
+        
+        // create the byrthday person object
+        ByrthdayPerson *byrthdayPerson = [[ByrthdayPerson alloc] init];
+        byrthdayPerson.uniqueId = [person uniqueId];
+        byrthdayPerson.me = (me != nil && me == person);
+        byrthdayPerson.firstName = (firstName ? firstName : @"");
+        byrthdayPerson.lastName = (lastName ? lastName : @"");
+        byrthdayPerson.nickName = (nickname ? nickname : @"");
+        byrthdayPerson.birthdayDate = birthdayDate;
+        byrthdayPerson.nextBirthdayDate = nextBirthdayDate;
+        byrthdayPerson.age = age;
+        byrthdayPerson.daysToBirthday = daysToBirthday;
+        
+        [people addObject:byrthdayPerson];
     }
     
     [people sortUsingComparator:^NSComparisonResult(id person1, id person2) {

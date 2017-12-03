@@ -28,7 +28,7 @@ int main(int argc, const char * argv[]) {
                 case 'h':
                     help();
                     return EXIT_SUCCESS;
-
+                    
                 case 'd':
                     withinDays = atoi(optarg);
                     break;
@@ -42,18 +42,23 @@ int main(int argc, const char * argv[]) {
                     return EXIT_FAILURE;
             }
         }
-
+        
         // using the gregorian calendar
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-
+        
         // date formatter to use
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
         [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
         
         // extract the byrthdays from the contacts
-        NSArray *byrthdayPeople = [[[ByrthdayPeople alloc] initWithCalendar:calendar] withinTheNextDays:withinDays];
-
+        NSArray *byrthdayPeople;
+        if(withinDays < 0) {
+            byrthdayPeople = [[[ByrthdayPeople alloc] initWithCalendar:calendar] all];
+        } else {
+            byrthdayPeople = [[[ByrthdayPeople alloc] initWithCalendar:calendar] withinTheNextDays:withinDays];
+        }
+        
         // print the response in the requested output format
         if([output isEqualToString:@"json"]) {
             printJSON(byrthdayPeople, dateFormatter);
