@@ -124,7 +124,7 @@ void help() {
     "Usage: \n"
     "  byrthdays [-d days] [-o format] \n\n"
     "Options: \n"
-    "  -d  extract only birthdays within the given number of days (default 14) \n"
+    "  -d  extract only birthdays within the given number of days (default 14; -1 for all) \n"
     "  -o  to set the output format. Can be either 'pretty' or 'json' (default 'pretty') \n"
     "  -h  prints this help \n"
     "\n"
