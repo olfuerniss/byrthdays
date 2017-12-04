@@ -14,4 +14,8 @@
 - (void) appendJsonField:(NSString *)name booleanValue:(Boolean)value;
 - (void) appendJsonField:(NSString *)name integerValue:(NSInteger)value;
 
+- (void) appendXmlElement:(NSString *)name stringValue:(NSString *)value;
+- (void) appendXmlElement:(NSString *)name booleanValue:(Boolean)value;
+- (void) appendXmlElement:(NSString *)name integerValue:(NSInteger)value;
+
 @end

@@ -12,6 +12,7 @@
 
 void nsprintf(NSString *format, ...);
 void printJSON(NSArray *byrthdays, NSDateFormatter *dateFormatter);
+void printXML(NSArray *birthdayPeople, NSDateFormatter *dateFormatter);
 void printPretty(NSArray *byrthdays, NSDateFormatter *dateFormatter);
 void help(void);
 
@@ -62,6 +63,8 @@ int main(int argc, const char * argv[]) {
         // print the response in the requested output format
         if([output isEqualToString:@"json"]) {
             printJSON(byrthdayPeople, dateFormatter);
+        } else if([output isEqualToString:@"xml"]) {
+            printXML(byrthdayPeople, dateFormatter);
         } else {
             printPretty(byrthdayPeople, dateFormatter);
         }
@@ -73,31 +76,72 @@ void printJSON(NSArray *birthdayPeople, NSDateFormatter *dateFormatter) {
     NSMutableString *resp = [[NSMutableString alloc] init];
     [resp appendString:@"["];
     [birthdayPeople enumerateObjectsUsingBlock:^(BirthdayPerson *person, NSUInteger idx, BOOL *stop) {
-        [resp appendString:@"{"];
+        [resp appendString:@"\n\t{"];
+        [resp appendString:@"\n\t\t"];
         [resp appendJsonField:@"uid" stringValue:[person uniqueId]];
         [resp appendString:@","];
+        [resp appendString:@"\n\t\t"];
         [resp appendJsonField:@"me" booleanValue:[person me]];
         [resp appendString:@","];
+        [resp appendString:@"\n\t\t"];
         [resp appendJsonField:@"firstName" stringValue:[person firstName]];
         [resp appendString:@","];
+        [resp appendString:@"\n\t\t"];
         [resp appendJsonField:@"lastName" stringValue:[person lastName]];
         [resp appendString:@","];
+        [resp appendString:@"\n\t\t"];
         [resp appendJsonField:@"nickName" stringValue:[person nickName]];
         [resp appendString:@","];
+        [resp appendString:@"\n\t\t"];
         [resp appendJsonField:@"birthdayDate" stringValue:[dateFormatter stringFromDate:[person birthdayDate]]];
         [resp appendString:@","];
+        [resp appendString:@"\n\t\t"];
         [resp appendJsonField:@"nextBirthdayDate" stringValue:[dateFormatter stringFromDate:[person nextBirthdayDate]]];
         [resp appendString:@","];
+        [resp appendString:@"\n\t\t"];
         [resp appendJsonField:@"age" integerValue:[person age]];
         [resp appendString:@","];
+        [resp appendString:@"\n\t\t"];
         [resp appendJsonField:@"daysToBirthday" integerValue:[person daysToBirthday]];
-        [resp appendString:@"}"];
+        [resp appendString:@"\n\t}"];
         
         if(idx+1 < [birthdayPeople count]) {
             [resp appendString:@","];
         }
     }];
-    [resp appendString:@"]"];
+    [resp appendString:@"\n]"];
+    nsprintf(@"%@", resp);
+}
+
+void printXML(NSArray *birthdayPeople, NSDateFormatter *dateFormatter) {
+    NSMutableString *resp = [[NSMutableString alloc] init];
+    [resp appendString:@"<?xml version=\"1.0\"?>"];
+    [resp appendString:@"\n<people>"];
+    
+    [birthdayPeople enumerateObjectsUsingBlock:^(BirthdayPerson *person, NSUInteger idx, BOOL *stop) {
+        [resp appendString:@"\n\t<person>"];
+        [resp appendString:@"\n\t\t"];
+        [resp appendXmlElement:@"uid" stringValue:[person uniqueId]];
+        [resp appendString:@"\n\t\t"];
+        [resp appendXmlElement:@"me" booleanValue:[person me]];
+        [resp appendString:@"\n\t\t"];
+        [resp appendXmlElement:@"first_name" stringValue:[person firstName]];
+        [resp appendString:@"\n\t\t"];
+        [resp appendXmlElement:@"last_name" stringValue:[person lastName]];
+        [resp appendString:@"\n\t\t"];
+        [resp appendXmlElement:@"nick_name" stringValue:[person nickName]];
+        [resp appendString:@"\n\t\t"];
+        [resp appendXmlElement:@"birthday_date" stringValue:[dateFormatter stringFromDate:[person birthdayDate]]];
+        [resp appendString:@"\n\t\t"];
+        [resp appendXmlElement:@"next_birthday_date" stringValue:[dateFormatter stringFromDate:[person nextBirthdayDate]]];
+        [resp appendString:@"\n\t\t"];
+        [resp appendXmlElement:@"age" integerValue:[person age]];
+        [resp appendString:@"\n\t\t"];
+        [resp appendXmlElement:@"days_to_birthday" integerValue:[person daysToBirthday]];
+        [resp appendString:@"\n\t</person>"];
+    }];
+    
+    [resp appendString:@"\n</people>"];
     nsprintf(@"%@", resp);
 }
 
@@ -125,13 +169,13 @@ void help() {
     NSString *help = @"\n"
     "Byrthdays is a tool to list people with birthdays from your macOS contacts. \n\n"
     "Usage: \n"
-    "  byrthdays [-d <days>] [-o <format>] \n\n"
+    "  byrthdays [-d <days>] [-o <pretty|json|xml>] \n\n"
     "Options: \n"
     "  -d  extract only birthdays within the given number of days (default 14; -1 for all) \n"
-    "  -o  to set the output format. Can be either 'pretty' or 'json' (default 'pretty') \n"
+    "  -o  to set the output format. Can be either 'pretty', 'json' or 'xml' (default 'pretty') \n"
     "  -h  prints this help \n"
     "\n"
-    "byrthdays v1.0.1 \n"
+    "byrthdays v1.0.2 \n"
     "Oliver Fürniß, 04/12/2017 \n"
     "Website: https://github.com/olfuerniss/byrthdays \n";
     
