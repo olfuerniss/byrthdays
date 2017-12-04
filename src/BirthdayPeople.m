@@ -58,7 +58,7 @@
         
         NSDate *birthdayDate = [self comparableDateForDay:[birthdayDateComponents day]
                                                     month:[birthdayDateComponents month]
-                                                     year:[birthdayDateComponents day]];
+                                                     year:[birthdayDateComponents year]];
         
         // compute the next birthday date
         NSInteger birthdayYear = [todaysDateComponents year];
