@@ -125,7 +125,7 @@ void help() {
     NSString *help = @"\n"
     "Byrthdays is a tool to list people with birthdays from your macOS contacts. \n\n"
     "Usage: \n"
-    "  byrthdays [-d days] [-o format] \n\n"
+    "  byrthdays [-d <days>] [-o <format>] \n\n"
     "Options: \n"
     "  -d  extract only birthdays within the given number of days (default 14; -1 for all) \n"
     "  -o  to set the output format. Can be either 'pretty' or 'json' (default 'pretty') \n"

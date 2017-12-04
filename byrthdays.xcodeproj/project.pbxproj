@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AE38CBCA1FCD667A005D1445 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AE38CBC91FCD667A005D1445 /* main.m */; };
-		AE4CE6BB1FCE95030094F0C1 /* ByrthdayPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = AE4CE6BA1FCE95030094F0C1 /* ByrthdayPerson.m */; };
+		AE4CE6BB1FCE95030094F0C1 /* BirthdayPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = AE4CE6BA1FCE95030094F0C1 /* BirthdayPerson.m */; };
 		AE6C41DF1FCDD5A900D60356 /* BirthdayPeople.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6C41DE1FCDD5A900D60356 /* BirthdayPeople.m */; };
 		AEC2DEB71FD2955000547018 /* NSMutableString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC2DEB61FD2955000547018 /* NSMutableString+Extension.m */; };
 /* End PBXBuildFile section */
@@ -26,10 +26,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		AE38CBC61FCD667A005D1445 /* byrthdayz */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = byrthdayz; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE38CBC61FCD667A005D1445 /* byrthdays */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = byrthdays; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE38CBC91FCD667A005D1445 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		AE4CE6B91FCE95030094F0C1 /* ByrthdayPerson.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ByrthdayPerson.h; sourceTree = "<group>"; };
-		AE4CE6BA1FCE95030094F0C1 /* ByrthdayPerson.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ByrthdayPerson.m; sourceTree = "<group>"; };
+		AE4CE6B91FCE95030094F0C1 /* BirthdayPerson.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BirthdayPerson.h; sourceTree = "<group>"; };
+		AE4CE6BA1FCE95030094F0C1 /* BirthdayPerson.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BirthdayPerson.m; sourceTree = "<group>"; };
 		AE6C41DD1FCDD5A900D60356 /* BirthdayPeople.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BirthdayPeople.h; sourceTree = "<group>"; };
 		AE6C41DE1FCDD5A900D60356 /* BirthdayPeople.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BirthdayPeople.m; sourceTree = "<group>"; };
 		AEC2DEB51FD2955000547018 /* NSMutableString+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableString+Extension.h"; sourceTree = "<group>"; };
@@ -50,7 +50,7 @@
 		AE38CBBD1FCD667A005D1445 = {
 			isa = PBXGroup;
 			children = (
-				AE38CBC81FCD667A005D1445 /* byrthdayz */,
+				AE38CBC81FCD667A005D1445 /* src */,
 				AE38CBC71FCD667A005D1445 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,31 +58,31 @@
 		AE38CBC71FCD667A005D1445 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AE38CBC61FCD667A005D1445 /* byrthdayz */,
+				AE38CBC61FCD667A005D1445 /* byrthdays */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AE38CBC81FCD667A005D1445 /* byrthdayz */ = {
+		AE38CBC81FCD667A005D1445 /* src */ = {
 			isa = PBXGroup;
 			children = (
 				AE38CBC91FCD667A005D1445 /* main.m */,
 				AE6C41DD1FCDD5A900D60356 /* BirthdayPeople.h */,
 				AE6C41DE1FCDD5A900D60356 /* BirthdayPeople.m */,
-				AE4CE6B91FCE95030094F0C1 /* ByrthdayPerson.h */,
-				AE4CE6BA1FCE95030094F0C1 /* ByrthdayPerson.m */,
+				AE4CE6B91FCE95030094F0C1 /* BirthdayPerson.h */,
+				AE4CE6BA1FCE95030094F0C1 /* BirthdayPerson.m */,
 				AEC2DEB51FD2955000547018 /* NSMutableString+Extension.h */,
 				AEC2DEB61FD2955000547018 /* NSMutableString+Extension.m */,
 			);
-			path = byrthdayz;
+			path = src;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AE38CBC51FCD667A005D1445 /* byrthdayz */ = {
+		AE38CBC51FCD667A005D1445 /* byrthdays */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AE38CBCD1FCD667A005D1445 /* Build configuration list for PBXNativeTarget "byrthdayz" */;
+			buildConfigurationList = AE38CBCD1FCD667A005D1445 /* Build configuration list for PBXNativeTarget "byrthdays" */;
 			buildPhases = (
 				AE38CBC21FCD667A005D1445 /* Sources */,
 				AE38CBC31FCD667A005D1445 /* Frameworks */,
@@ -92,9 +92,9 @@
 			);
 			dependencies = (
 			);
-			name = byrthdayz;
+			name = byrthdays;
 			productName = byrthdayz;
-			productReference = AE38CBC61FCD667A005D1445 /* byrthdayz */;
+			productReference = AE38CBC61FCD667A005D1445 /* byrthdays */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -112,7 +112,7 @@
 					};
 				};
 			};
-			buildConfigurationList = AE38CBC11FCD667A005D1445 /* Build configuration list for PBXProject "byrthdayz" */;
+			buildConfigurationList = AE38CBC11FCD667A005D1445 /* Build configuration list for PBXProject "byrthdays" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -124,7 +124,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AE38CBC51FCD667A005D1445 /* byrthdayz */,
+				AE38CBC51FCD667A005D1445 /* byrthdays */,
 			);
 		};
 /* End PBXProject section */
@@ -136,7 +136,7 @@
 			files = (
 				AEC2DEB71FD2955000547018 /* NSMutableString+Extension.m in Sources */,
 				AE38CBCA1FCD667A005D1445 /* main.m in Sources */,
-				AE4CE6BB1FCE95030094F0C1 /* ByrthdayPerson.m in Sources */,
+				AE4CE6BB1FCE95030094F0C1 /* BirthdayPerson.m in Sources */,
 				AE6C41DF1FCDD5A900D60356 /* BirthdayPeople.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -192,7 +192,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -241,7 +241,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -268,7 +268,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AE38CBC11FCD667A005D1445 /* Build configuration list for PBXProject "byrthdayz" */ = {
+		AE38CBC11FCD667A005D1445 /* Build configuration list for PBXProject "byrthdays" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AE38CBCB1FCD667A005D1445 /* Debug */,
@@ -277,7 +277,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AE38CBCD1FCD667A005D1445 /* Build configuration list for PBXNativeTarget "byrthdayz" */ = {
+		AE38CBCD1FCD667A005D1445 /* Build configuration list for PBXNativeTarget "byrthdays" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AE38CBCE1FCD667A005D1445 /* Debug */,

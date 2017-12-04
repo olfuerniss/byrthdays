@@ -33,8 +33,8 @@
 }
 
 - (NSArray *) all {
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:10];
-
+    NSMutableArray *result = [NSMutableArray array];
+    
     // get the current date
     NSDate *todaysDate = [NSDate date];
     NSDateComponents *todaysDateComponents = [self.calendar components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear)
@@ -44,25 +44,27 @@
     ABPerson *me = [[ABAddressBook sharedAddressBook] me];
     
     // get the persons with birthdays from the address book
-    for(ABPerson *person in [[ABAddressBook sharedAddressBook] people]) {
-        NSDateComponents *birthdayDateComponents = [person valueForProperty:kABBirthdayComponentsProperty];
-
+    for(ABPerson *abPerson in [[ABAddressBook sharedAddressBook] people]) {
+        NSDateComponents *birthdayDateComponents = [abPerson valueForProperty:kABBirthdayComponentsProperty];
+        
         // only people with a birthday set
         if(birthdayDateComponents == nil) {
             continue;
         }
         
-        NSString *firstName = [person valueForProperty:kABFirstNameProperty];
-        NSString *lastName = [person valueForProperty:kABLastNameProperty];
-        NSString *nickname = [person valueForProperty:kABNicknameProperty];
+        NSString *firstName = [abPerson valueForProperty:kABFirstNameProperty];
+        NSString *lastName = [abPerson valueForProperty:kABLastNameProperty];
+        NSString *nickname = [abPerson valueForProperty:kABNicknameProperty];
         
         NSDate *birthdayDate = [self comparableDateForDay:[birthdayDateComponents day]
                                                     month:[birthdayDateComponents month]
                                                      year:[birthdayDateComponents day]];
         
-        // next birthday date
+        // compute the next birthday date
         NSInteger birthdayYear = [todaysDateComponents year];
-        if(([birthdayDateComponents month] == [todaysDateComponents month] && [birthdayDateComponents day] < [todaysDateComponents day]) || [birthdayDateComponents month] < [todaysDateComponents month])  {
+        if([birthdayDateComponents month] < [todaysDateComponents month]) {
+            birthdayYear++;
+        } else if([birthdayDateComponents month] == [todaysDateComponents month] && [birthdayDateComponents day] < [todaysDateComponents day])  {
             birthdayYear++;
         }
         NSDate *nextBirthdayDate = [self comparableDateForDay:[birthdayDateComponents day]
@@ -82,21 +84,22 @@
                                                          options:0];
         NSInteger daysToBirthday = ABS([components day]);
         
-        // create the birthday person object
-        BirthdayPerson *byrthdayPerson = [[BirthdayPerson alloc] init];
-        byrthdayPerson.uniqueId = [person uniqueId];
-        byrthdayPerson.me = (me != nil && me == person);
-        byrthdayPerson.firstName = (firstName ? firstName : @"");
-        byrthdayPerson.lastName = (lastName ? lastName : @"");
-        byrthdayPerson.nickName = (nickname ? nickname : @"");
-        byrthdayPerson.birthdayDate = birthdayDate;
-        byrthdayPerson.nextBirthdayDate = nextBirthdayDate;
-        byrthdayPerson.age = age;
-        byrthdayPerson.daysToBirthday = daysToBirthday;
+        // create the birthday person
+        BirthdayPerson *birthdayPerson = [[BirthdayPerson alloc] init];
+        birthdayPerson.uniqueId = [abPerson uniqueId];
+        birthdayPerson.me = (me != nil && me == abPerson);
+        birthdayPerson.firstName = (firstName ? firstName : @"");
+        birthdayPerson.lastName = (lastName ? lastName : @"");
+        birthdayPerson.nickName = (nickname ? nickname : @"");
+        birthdayPerson.birthdayDate = birthdayDate;
+        birthdayPerson.nextBirthdayDate = nextBirthdayDate;
+        birthdayPerson.age = age;
+        birthdayPerson.daysToBirthday = daysToBirthday;
         
-        [result addObject:byrthdayPerson];
+        [result addObject:birthdayPerson];
     }
     
+    // sort by next birthday ascending
     [result sortUsingComparator:^NSComparisonResult(id person1, id person2) {
         NSDate *first = [(BirthdayPerson *)person1 nextBirthdayDate];
         NSDate *second = [(BirthdayPerson *)person2 nextBirthdayDate];
