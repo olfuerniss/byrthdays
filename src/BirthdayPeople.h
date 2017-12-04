@@ -1,15 +1,15 @@
 //
-//  Byrthdays.h
-//  byrthdayz
+//  BirthdayPeople.h
+//  byrthdays
 //
 //  Created by Oliver Fürniß on 28.11.17.
 //  Copyright © 2017 Oliver Fürniß. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "ByrthdayPerson.h"
+#import "BirthdayPerson.h"
 
-@interface ByrthdayPeople : NSObject
+@interface BirthdayPeople : NSObject
 
 @property (nonatomic, readonly, strong) NSCalendar *calendar;
 

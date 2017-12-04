@@ -1,6 +1,6 @@
 //
 //  NSMutableString+Extension.h
-//  byrthdayz
+//  byrthdays
 //
 //  Created by Oliver Fürniß on 02.12.17.
 //  Copyright © 2017 Oliver Fürniß. All rights reserved.

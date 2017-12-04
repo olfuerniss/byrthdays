@@ -1,15 +1,15 @@
 //
-//  Byrthdays.m
-//  byrthdayz
+//  BirthdayPeople.m
+//  byrthdays
 //
 //  Created by Oliver Fürniß on 28.11.17.
 //  Copyright © 2017 Oliver Fürniß. All rights reserved.
 //
 
-#import "ByrthdayPeople.h"
+#import "BirthdayPeople.h"
 #import <AddressBook/AddressBook.h>
 
-@implementation ByrthdayPeople
+@implementation BirthdayPeople
 
 - (id) initWithCalendar:(NSCalendar *)calendar {
     if (self = [super init]) {
@@ -22,9 +22,9 @@
 
 - (NSArray *) withinTheNextDays:(NSInteger)days {
     NSMutableArray *result = [NSMutableArray array];
-    for(ByrthdayPerson *byrthdayPerson in [self all]) {
-        if([byrthdayPerson daysToBirthday] <= days) {
-            [result addObject:byrthdayPerson];
+    for(BirthdayPerson *birthdayPerson in [self all]) {
+        if([birthdayPerson daysToBirthday] <= days) {
+            [result addObject:birthdayPerson];
         } else {
             break;
         }
@@ -82,8 +82,8 @@
                                                          options:0];
         NSInteger daysToBirthday = ABS([components day]);
         
-        // create the byrthday person object
-        ByrthdayPerson *byrthdayPerson = [[ByrthdayPerson alloc] init];
+        // create the birthday person object
+        BirthdayPerson *byrthdayPerson = [[BirthdayPerson alloc] init];
         byrthdayPerson.uniqueId = [person uniqueId];
         byrthdayPerson.me = (me != nil && me == person);
         byrthdayPerson.firstName = (firstName ? firstName : @"");
@@ -98,8 +98,8 @@
     }
     
     [result sortUsingComparator:^NSComparisonResult(id person1, id person2) {
-        NSDate *first = [(ByrthdayPerson *)person1 nextBirthdayDate];
-        NSDate *second = [(ByrthdayPerson *)person2 nextBirthdayDate];
+        NSDate *first = [(BirthdayPerson *)person1 nextBirthdayDate];
+        NSDate *second = [(BirthdayPerson *)person2 nextBirthdayDate];
         return [first compare:second];
     }];
     

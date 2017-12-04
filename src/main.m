@@ -1,13 +1,13 @@
 //
 //  main.m
-//  byrthdayz
+//  byrthdays
 //
 //  Created by Oliver Fürniß on 28.11.17.
 //  Copyright © 2017 Oliver Fürniß. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "ByrthdayPeople.h"
+#import "BirthdayPeople.h"
 #import "NSMutableString+Extension.h"
 
 void nsprintf(NSString *format, ...);
@@ -54,9 +54,9 @@ int main(int argc, const char * argv[]) {
         // extract the byrthdays from the contacts
         NSArray *byrthdayPeople;
         if(withinDays < 0) {
-            byrthdayPeople = [[[ByrthdayPeople alloc] initWithCalendar:calendar] all];
+            byrthdayPeople = [[[BirthdayPeople alloc] initWithCalendar:calendar] all];
         } else {
-            byrthdayPeople = [[[ByrthdayPeople alloc] initWithCalendar:calendar] withinTheNextDays:withinDays];
+            byrthdayPeople = [[[BirthdayPeople alloc] initWithCalendar:calendar] withinTheNextDays:withinDays];
         }
         
         // print the response in the requested output format
@@ -69,31 +69,31 @@ int main(int argc, const char * argv[]) {
     return EXIT_SUCCESS;
 }
 
-void printJSON(NSArray *byrthdays, NSDateFormatter *dateFormatter) {
+void printJSON(NSArray *birthdayPeople, NSDateFormatter *dateFormatter) {
     NSMutableString *resp = [[NSMutableString alloc] init];
     [resp appendString:@"["];
-    [byrthdays enumerateObjectsUsingBlock:^(ByrthdayPerson *byrthday, NSUInteger idx, BOOL *stop) {
+    [birthdayPeople enumerateObjectsUsingBlock:^(BirthdayPerson *person, NSUInteger idx, BOOL *stop) {
         [resp appendString:@"{"];
-        [resp appendJsonField:@"uid" stringValue:[byrthday uniqueId]];
+        [resp appendJsonField:@"uid" stringValue:[person uniqueId]];
         [resp appendString:@","];
-        [resp appendJsonField:@"me" booleanValue:[byrthday me]];
+        [resp appendJsonField:@"me" booleanValue:[person me]];
         [resp appendString:@","];
-        [resp appendJsonField:@"firstName" stringValue:[byrthday firstName]];
+        [resp appendJsonField:@"firstName" stringValue:[person firstName]];
         [resp appendString:@","];
-        [resp appendJsonField:@"lastName" stringValue:[byrthday lastName]];
+        [resp appendJsonField:@"lastName" stringValue:[person lastName]];
         [resp appendString:@","];
-        [resp appendJsonField:@"nickName" stringValue:[byrthday nickName]];
+        [resp appendJsonField:@"nickName" stringValue:[person nickName]];
         [resp appendString:@","];
-        [resp appendJsonField:@"birthdayDate" stringValue:[dateFormatter stringFromDate:[byrthday birthdayDate]]];
+        [resp appendJsonField:@"birthdayDate" stringValue:[dateFormatter stringFromDate:[person birthdayDate]]];
         [resp appendString:@","];
-        [resp appendJsonField:@"nextBirthdayDate" stringValue:[dateFormatter stringFromDate:[byrthday nextBirthdayDate]]];
+        [resp appendJsonField:@"nextBirthdayDate" stringValue:[dateFormatter stringFromDate:[person nextBirthdayDate]]];
         [resp appendString:@","];
-        [resp appendJsonField:@"age" integerValue:[byrthday age]];
+        [resp appendJsonField:@"age" integerValue:[person age]];
         [resp appendString:@","];
-        [resp appendJsonField:@"daysToBirthday" integerValue:[byrthday daysToBirthday]];
+        [resp appendJsonField:@"daysToBirthday" integerValue:[person daysToBirthday]];
         [resp appendString:@"}"];
         
-        if(idx+1 < [byrthdays count]) {
+        if(idx+1 < [birthdayPeople count]) {
             [resp appendString:@","];
         }
     }];
@@ -101,14 +101,14 @@ void printJSON(NSArray *byrthdays, NSDateFormatter *dateFormatter) {
     nsprintf(@"%@", resp);
 }
 
-void printPretty(NSArray *byrthdays, NSDateFormatter *dateFormatter) {
-    for(ByrthdayPerson *byrthday in byrthdays) {
-        if(byrthday.daysToBirthday == 0) {
-            nsprintf(@"%@: %@ %@ will be %ld today \n", [dateFormatter stringFromDate:byrthday.nextBirthdayDate], byrthday.firstName, byrthday.lastName, byrthday.age);
-        } else if(byrthday.daysToBirthday == 1) {
-            nsprintf(@"%@: %@ %@ will be %ld tomorrow \n", [dateFormatter stringFromDate:byrthday.nextBirthdayDate], byrthday.firstName, byrthday.lastName, byrthday.age);
+void printPretty(NSArray *birthdayPeople, NSDateFormatter *dateFormatter) {
+    for(BirthdayPerson *person in birthdayPeople) {
+        if(person.daysToBirthday == 0) {
+            nsprintf(@"%@: %@ %@ will be %ld today \n", [dateFormatter stringFromDate:person.nextBirthdayDate], person.firstName, person.lastName, person.age);
+        } else if(person.daysToBirthday == 1) {
+            nsprintf(@"%@: %@ %@ will be %ld tomorrow \n", [dateFormatter stringFromDate:person.nextBirthdayDate], person.firstName, person.lastName, person.age);
         } else {
-            nsprintf(@"%@: %@ %@ will be %ld in %ld days \n", [dateFormatter stringFromDate:byrthday.nextBirthdayDate], byrthday.firstName, byrthday.lastName, byrthday.age, byrthday.daysToBirthday);
+            nsprintf(@"%@: %@ %@ will be %ld in %ld days \n", [dateFormatter stringFromDate:person.nextBirthdayDate], person.firstName, person.lastName, person.age, person.daysToBirthday);
         }
     }
 }
@@ -123,7 +123,7 @@ void nsprintf(NSString *format, ...) {
 
 void help() {
     NSString *help = @"\n"
-    "Byrthdays is a tool to extract people with birthdays from your contacts. \n\n"
+    "Byrthdays is a tool to list people with birthdays from your macOS contacts. \n\n"
     "Usage: \n"
     "  byrthdays [-d days] [-o format] \n\n"
     "Options: \n"
@@ -131,9 +131,9 @@ void help() {
     "  -o  to set the output format. Can be either 'pretty' or 'json' (default 'pretty') \n"
     "  -h  prints this help \n"
     "\n"
-    "byrthdays v1.0\n"
-    "Oliver Fürniß, 03/12/2017\n"
-    "Website: https://github.com/olfuerniss/byrthdays\n";
+    "byrthdays v1.0.1 \n"
+    "Oliver Fürniß, 04/12/2017 \n"
+    "Website: https://github.com/olfuerniss/byrthdays \n";
     
     nsprintf(help);
 }

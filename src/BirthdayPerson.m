@@ -1,13 +1,13 @@
 //
-//  Byrthday.m
-//  byrthdayz
+//  BirthdayPerson.m
+//  byrthdays
 //
 //  Created by Oliver Fürniß on 29.11.17.
 //  Copyright © 2017 Oliver Fürniß. All rights reserved.
 //
 
-#import "ByrthdayPerson.h"
+#import "BirthdayPerson.h"
 
-@implementation ByrthdayPerson
+@implementation BirthdayPerson
 
 @end

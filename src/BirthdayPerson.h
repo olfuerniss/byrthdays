@@ -1,6 +1,6 @@
 //
-//  Byrthday.h
-//  byrthdayz
+//  BirthdayPerson.h
+//  byrthdays
 //
 //  Created by Oliver Fürniß on 29.11.17.
 //  Copyright © 2017 Oliver Fürniß. All rights reserved.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ByrthdayPerson : NSObject
+@interface BirthdayPerson : NSObject
 
 @property (nonatomic, strong) NSString *uniqueId;
 @property (nonatomic, assign) Boolean me;
