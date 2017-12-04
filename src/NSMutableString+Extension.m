@@ -11,7 +11,7 @@
 @implementation NSMutableString (Extension)
 
 - (void) appendJsonField:(NSString *)name stringValue:(NSString *)value {
-    [self appendFormat:@"\"%@\":\"%@\"", name, value];
+    [self appendFormat:@"\"%@\":\"%@\"", name, [value stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""]];
 }
 
 - (void) appendJsonField:(NSString *)name booleanValue:(Boolean)value {
