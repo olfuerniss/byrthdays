@@ -34,6 +34,7 @@
 		AE6C41DE1FCDD5A900D60356 /* BirthdayPeople.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BirthdayPeople.m; sourceTree = "<group>"; };
 		AEC2DEB51FD2955000547018 /* NSMutableString+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableString+Extension.h"; sourceTree = "<group>"; };
 		AEC2DEB61FD2955000547018 /* NSMutableString+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableString+Extension.m"; sourceTree = "<group>"; };
+		AECC57BA1FD7030300E58B0B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +53,7 @@
 			children = (
 				AE38CBC81FCD667A005D1445 /* src */,
 				AE38CBC71FCD667A005D1445 /* Products */,
+				AECC57BA1FD7030300E58B0B /* README.md */,
 			);
 			sourceTree = "<group>";
 		};

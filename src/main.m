@@ -13,6 +13,7 @@
 void nsprintf(NSString *format, ...);
 void printJSON(NSArray *byrthdays, NSDateFormatter *dateFormatter);
 void printXML(NSArray *birthdayPeople, NSDateFormatter *dateFormatter);
+void printCSV(NSArray *birthdayPeople, NSDateFormatter *dateFormatter);
 void printPretty(NSArray *byrthdays, NSDateFormatter *dateFormatter);
 void help(void);
 
@@ -65,6 +66,8 @@ int main(int argc, const char * argv[]) {
             printJSON(byrthdayPeople, dateFormatter);
         } else if([output isEqualToString:@"xml"]) {
             printXML(byrthdayPeople, dateFormatter);
+        } else if([output isEqualToString:@"csv"]) {
+            printCSV(byrthdayPeople, dateFormatter);
         } else {
             printPretty(byrthdayPeople, dateFormatter);
         }
@@ -145,6 +148,55 @@ void printXML(NSArray *birthdayPeople, NSDateFormatter *dateFormatter) {
     nsprintf(@"%@", resp);
 }
 
+void printCSV(NSArray *birthdayPeople, NSDateFormatter *dateFormatter) {
+    NSMutableString *resp = [[NSMutableString alloc] init];
+    
+    // header
+    NSMutableArray *headerEntries = [NSMutableArray arrayWithObjects:
+                                     @"uid",
+                                     @"me",
+                                     @"first_name",
+                                     @"last_name",
+                                     @"nick_name",
+                                     @"birthday_date",
+                                     @"next_birthday_date",
+                                     @"age",
+                                     @"days_to_birthday",
+                                     nil];
+    [headerEntries enumerateObjectsUsingBlock:^(NSString *headerEntry, NSUInteger idx, BOOL *stop) {
+        [resp appendFormat:@"\"%@\"", headerEntry];
+        
+        if(idx < [headerEntries count]-1) {
+            [resp appendString:@", "];
+        }
+    }];
+    [resp appendString:@"\n"];
+    
+    // content
+    [birthdayPeople enumerateObjectsUsingBlock:^(BirthdayPerson *person, NSUInteger idx, BOOL *stop) {
+        [resp appendCsvStringValue:[person uniqueId]];
+        [resp appendString:@", "];
+        [resp appendCsvBooleanValue:[person me]];
+        [resp appendString:@", "];
+        [resp appendCsvStringValue:[person firstName]];
+        [resp appendString:@", "];
+        [resp appendCsvStringValue:[person lastName]];
+        [resp appendString:@", "];
+        [resp appendCsvStringValue:[person nickName]];
+        [resp appendString:@", "];
+        [resp appendCsvStringValue:[dateFormatter stringFromDate:[person birthdayDate]]];
+        [resp appendString:@", "];
+        [resp appendCsvStringValue:[dateFormatter stringFromDate:[person nextBirthdayDate]]];
+        [resp appendString:@", "];
+        [resp appendCsvIntegerValue:[person age]];
+        [resp appendString:@", "];
+        [resp appendCsvIntegerValue:[person daysToBirthday]];
+        [resp appendString:@"\n"];
+    }];
+    
+    nsprintf(@"%@", resp);
+}
+
 void printPretty(NSArray *birthdayPeople, NSDateFormatter *dateFormatter) {
     for(BirthdayPerson *person in birthdayPeople) {
         if(person.daysToBirthday == 0) {
@@ -169,14 +221,14 @@ void help() {
     NSString *help = @"\n"
     "Byrthdays is a tool to list people with birthdays from your macOS contacts. \n\n"
     "Usage: \n"
-    "  byrthdays [-d <days>] [-o <pretty|json|xml>] \n\n"
+    "  byrthdays [-d <days>] [-o <pretty|json|xml|csv>] \n\n"
     "Options: \n"
     "  -d  extract only birthdays within the given number of days (default 14; -1 for all) \n"
-    "  -o  to set the output format. Can be either 'pretty', 'json' or 'xml' (default 'pretty') \n"
+    "  -o  to set the output format. Can be either 'pretty', 'json', 'xml' or 'csv' (default 'pretty') \n"
     "  -h  prints this help \n"
     "\n"
-    "byrthdays v1.0.2 \n"
-    "Oliver Fürniß, 04/12/2017 \n"
+    "byrthdays v1.0.3 \n"
+    "Oliver Fürniß, 05/12/2017 \n"
     "Website: https://github.com/olfuerniss/byrthdays \n";
     
     nsprintf(help);

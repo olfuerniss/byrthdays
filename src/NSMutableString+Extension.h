@@ -18,4 +18,8 @@
 - (void) appendXmlElement:(NSString *)name booleanValue:(Boolean)value;
 - (void) appendXmlElement:(NSString *)name integerValue:(NSInteger)value;
 
+- (void) appendCsvStringValue:(NSString *)value;
+- (void) appendCsvBooleanValue:(Boolean)value;
+- (void) appendCsvIntegerValue:(NSInteger)value;
+
 @end

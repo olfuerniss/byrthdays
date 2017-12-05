@@ -44,4 +44,18 @@
     [self appendFormat:@"<%@>%ld</%@>", name, value, name];
 }
 
+#pragma mark - CSV
+
+- (void) appendCsvStringValue:(NSString *)value {
+    [self appendFormat:@"\"%@\"", [value stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""]];
+}
+
+- (void) appendCsvBooleanValue:(Boolean)value {
+    [self appendFormat:@"%@", value ? @"true" : @"false"];
+}
+
+- (void) appendCsvIntegerValue:(NSInteger)value {
+    [self appendFormat:@"%ld", value];
+}
+
 @end
