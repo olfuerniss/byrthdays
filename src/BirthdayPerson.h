@@ -20,4 +20,7 @@
 @property (nonatomic, assign) NSInteger age;
 @property (nonatomic, assign) NSInteger daysToBirthday;
 
+- (NSImage *) image;
+- (NSString *) base64EncodedThumbnailImageWithMaximumWidthOrHeight:(CGFloat)maxWidthOrHeight;
+
 @end
