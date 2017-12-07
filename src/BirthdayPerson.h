@@ -21,6 +21,6 @@
 @property (nonatomic, assign) NSInteger daysToBirthday;
 
 - (NSImage *) image;
-- (NSString *) base64EncodedThumbnailImageWithMaximumWidthOrHeight:(CGFloat)maxWidthOrHeight;
+- (NSString *) base64EncodedThumbnailImageWithMaximumWidthOrHeight:(CGFloat)maxWidthOrHeight grayscale:(bool)grayscale;
 
 @end

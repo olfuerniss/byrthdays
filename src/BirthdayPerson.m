@@ -22,7 +22,7 @@
     return nil;
 }
 
-- (NSString *) base64EncodedThumbnailImageWithMaximumWidthOrHeight:(CGFloat)maxWidthOrHeight {
+- (NSString *) base64EncodedThumbnailImageWithMaximumWidthOrHeight:(CGFloat)maxWidthOrHeight grayscale:(bool)grayscale {
     NSImage *originalImage = [self image];
     if(originalImage != nil) {
         // compute the thumbnail size
@@ -36,24 +36,42 @@
         }
         
         // create the thumbnail
-        NSBitmapImageRep *thumbnailRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL
-                                                                                 pixelsWide:thumbnailSize.width
-                                                                                 pixelsHigh:thumbnailSize.height
-                                                                              bitsPerSample:8
-                                                                            samplesPerPixel:4
-                                                                                   hasAlpha:YES
-                                                                                   isPlanar:NO
-                                                                             colorSpaceName:NSCalibratedRGBColorSpace
-                                                                                bytesPerRow:0
-                                                                               bitsPerPixel:0];
+        NSBitmapImageRep *thumbnailRep;
+        if(grayscale) {
+            thumbnailRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL
+                                                                   pixelsWide:thumbnailSize.width
+                                                                   pixelsHigh:thumbnailSize.height
+                                                                bitsPerSample:8
+                                                              samplesPerPixel:1
+                                                                     hasAlpha:NO
+                                                                     isPlanar:NO
+                                                               colorSpaceName:NSCalibratedWhiteColorSpace
+                                                                  bytesPerRow:0
+                                                                 bitsPerPixel:8];
+        } else {
+            thumbnailRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL
+                                                                   pixelsWide:thumbnailSize.width
+                                                                   pixelsHigh:thumbnailSize.height
+                                                                bitsPerSample:8
+                                                              samplesPerPixel:4
+                                                                     hasAlpha:YES
+                                                                     isPlanar:NO
+                                                               colorSpaceName:NSCalibratedRGBColorSpace
+                                                                  bytesPerRow:0
+                                                                 bitsPerPixel:0];
+        }
+        
+        
         [thumbnailRep setSize:thumbnailSize];
         
         [NSGraphicsContext saveGraphicsState];
         [NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:thumbnailRep]];
+        
         [originalImage drawInRect:NSMakeRect(0, 0, thumbnailSize.width, thumbnailSize.height)
                          fromRect:NSZeroRect
-                        operation:NSCompositeCopy
+                        operation:NSCompositeCopy /* NSCompositeSourceOver */
                          fraction:1.0];
+        
         [NSGraphicsContext restoreGraphicsState];
         
         // get the png data

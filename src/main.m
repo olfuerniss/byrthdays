@@ -11,9 +11,9 @@
 #import "NSMutableString+Extension.h"
 
 void nsprintf(NSString *format, ...);
-void printJSON(NSArray *byrthdays, int thumbnailSize, NSDateFormatter *dateFormatter);
-void printXML(NSArray *birthdayPeople, int thumbnailSize, NSDateFormatter *dateFormatter);
-void printCSV(NSArray *birthdayPeople, int thumbnailSize, NSDateFormatter *dateFormatter);
+void printJSON(NSArray *byrthdays, int thumbnailSize, bool grayscaleThumbnail, NSDateFormatter *dateFormatter);
+void printXML(NSArray *birthdayPeople, int thumbnailSize, bool grayscaleThumbnail, NSDateFormatter *dateFormatter);
+void printCSV(NSArray *birthdayPeople, int thumbnailSize, bool grayscaleThumbnail, NSDateFormatter *dateFormatter);
 void printPretty(NSArray *byrthdays, NSDateFormatter *dateFormatter);
 void help(void);
 
@@ -23,9 +23,10 @@ int main(int argc, const char * argv[]) {
         int withinDays = 14;
         NSString *output = @"pretty";
         int thumbnailSize = 0;
+        bool grayscaleThumbnail = false;
         
         unsigned int optchar;
-        while ((optchar = getopt(argc, (char * const *)argv, "h?d:o:t:")) != -1) {
+        while ((optchar = getopt(argc, (char * const *)argv, "h?d:o:t:g")) != -1) {
             switch (optchar) {
                 case '?':
                 case 'h':
@@ -43,7 +44,11 @@ int main(int argc, const char * argv[]) {
                 case 't':
                     thumbnailSize = atoi(optarg);
                     break;
-                    
+
+                case 'g':
+                    grayscaleThumbnail = true;
+                    break;
+
                 default:
                     help();
                     return EXIT_FAILURE;
@@ -68,11 +73,11 @@ int main(int argc, const char * argv[]) {
         
         // print the response in the requested output format
         if([output isEqualToString:@"json"]) {
-            printJSON(byrthdayPeople, thumbnailSize, dateFormatter);
+            printJSON(byrthdayPeople, thumbnailSize, grayscaleThumbnail, dateFormatter);
         } else if([output isEqualToString:@"xml"]) {
-            printXML(byrthdayPeople, thumbnailSize, dateFormatter);
+            printXML(byrthdayPeople, thumbnailSize, grayscaleThumbnail, dateFormatter);
         } else if([output isEqualToString:@"csv"]) {
-            printCSV(byrthdayPeople, thumbnailSize, dateFormatter);
+            printCSV(byrthdayPeople, thumbnailSize, grayscaleThumbnail, dateFormatter);
         } else {
             printPretty(byrthdayPeople, dateFormatter);
         }
@@ -80,7 +85,7 @@ int main(int argc, const char * argv[]) {
     return EXIT_SUCCESS;
 }
 
-void printJSON(NSArray *birthdayPeople, int thumbnailSize, NSDateFormatter *dateFormatter) {
+void printJSON(NSArray *birthdayPeople, int thumbnailSize, bool grayscaleThumbnail, NSDateFormatter *dateFormatter) {
     NSMutableString *resp = [[NSMutableString alloc] init];
     [resp appendString:@"["];
     [birthdayPeople enumerateObjectsUsingBlock:^(BirthdayPerson *person, NSUInteger idx, BOOL *stop) {
@@ -114,7 +119,7 @@ void printJSON(NSArray *birthdayPeople, int thumbnailSize, NSDateFormatter *date
         if(thumbnailSize > 0) {
             [resp appendString:@","];
             [resp appendString:@"\n\t\t"];
-            [resp appendJsonField:@"image" stringValue:[person base64EncodedThumbnailImageWithMaximumWidthOrHeight:thumbnailSize]];
+            [resp appendJsonField:@"image" stringValue:[person base64EncodedThumbnailImageWithMaximumWidthOrHeight:thumbnailSize grayscale:grayscaleThumbnail]];
         }
         [resp appendString:@"\n\t}"];
         
@@ -126,7 +131,7 @@ void printJSON(NSArray *birthdayPeople, int thumbnailSize, NSDateFormatter *date
     nsprintf(@"%@", resp);
 }
 
-void printXML(NSArray *birthdayPeople, int thumbnailSize, NSDateFormatter *dateFormatter) {
+void printXML(NSArray *birthdayPeople, int thumbnailSize, bool grayscaleThumbnail, NSDateFormatter *dateFormatter) {
     NSMutableString *resp = [[NSMutableString alloc] init];
     [resp appendString:@"<?xml version=\"1.0\"?>"];
     [resp appendString:@"\n<people>"];
@@ -153,7 +158,7 @@ void printXML(NSArray *birthdayPeople, int thumbnailSize, NSDateFormatter *dateF
         [resp appendXmlElement:@"days_to_birthday" integerValue:[person daysToBirthday]];
         if(thumbnailSize > 0) {
             [resp appendString:@"\n\t\t"];
-            [resp appendXmlElement:@"image" stringValue:[person base64EncodedThumbnailImageWithMaximumWidthOrHeight:thumbnailSize]];
+            [resp appendXmlElement:@"image" stringValue:[person base64EncodedThumbnailImageWithMaximumWidthOrHeight:thumbnailSize grayscale:grayscaleThumbnail]];
         }
         [resp appendString:@"\n\t</person>"];
     }];
@@ -162,7 +167,7 @@ void printXML(NSArray *birthdayPeople, int thumbnailSize, NSDateFormatter *dateF
     nsprintf(@"%@", resp);
 }
 
-void printCSV(NSArray *birthdayPeople, int thumbnailSize, NSDateFormatter *dateFormatter) {
+void printCSV(NSArray *birthdayPeople, int thumbnailSize, bool grayscaleThumbnail, NSDateFormatter *dateFormatter) {
     NSMutableString *resp = [[NSMutableString alloc] init];
     
     // header
@@ -210,7 +215,7 @@ void printCSV(NSArray *birthdayPeople, int thumbnailSize, NSDateFormatter *dateF
         [resp appendCsvIntegerValue:[person daysToBirthday]];
         if(thumbnailSize > 0) {
             [resp appendString:@", "];
-            [resp appendCsvStringValue:[person base64EncodedThumbnailImageWithMaximumWidthOrHeight:thumbnailSize]];
+            [resp appendCsvStringValue:[person base64EncodedThumbnailImageWithMaximumWidthOrHeight:thumbnailSize grayscale:grayscaleThumbnail]];
         }
         [resp appendString:@"\n"];
     }];
@@ -242,15 +247,16 @@ void help() {
     NSString *help = @"\n"
     "Byrthdays is a tool to list people with birthdays from your macOS contacts. \n\n"
     "Usage: \n"
-    "  byrthdays [-d <days>] [-o <pretty|json|xml|csv>] [-t <size>]\n\n"
+    "  byrthdays [-d <days>] [-o <pretty|json|xml|csv>] [-t <size>] [-g] \n\n"
     "Options: \n"
     "  -d  extract only birthdays within the given number of days (default 14; -1 for all) \n"
     "  -o  to set the output format. Can be either 'pretty', 'json', 'xml' or 'csv' (default 'pretty') \n"
     "  -t  to set the maximum thumbnail width/height of the contact images. It only prints the base64 encoded thumbnail data (PNG) when this option is used \n"
+    "  -g  to create grayscale thumbnails. Only in combination with '-t' \n"
     "  -h  prints this help \n"
     "\n"
-    "byrthdays v1.0.4 \n"
-    "Oliver Fürniß, 06/12/2017 \n"
+    "byrthdays v1.0.5 \n"
+    "Oliver Fürniß, 07/12/2017 \n"
     "Website: https://github.com/olfuerniss/byrthdays \n";
     
     nsprintf(help);
