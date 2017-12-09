@@ -31,8 +31,8 @@ Options:
   -g  to create grayscale thumbnails. Only in combination with '-t'
   -h  prints this help
 
-byrthdays v1.0.5
-Oliver Fürniß, 07/12/2017
+byrthdays v1.0.6
+Oliver Fürniß, 09/12/2017
 Website: https://github.com/olfuerniss/byrthdays
 
 ```

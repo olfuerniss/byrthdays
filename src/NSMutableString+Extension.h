@@ -10,16 +10,16 @@
 
 @interface NSMutableString (Extension)
 
-- (void) appendJsonField:(NSString *)name stringValue:(NSString *)value;
-- (void) appendJsonField:(NSString *)name booleanValue:(Boolean)value;
-- (void) appendJsonField:(NSString *)name integerValue:(NSInteger)value;
+- (void) appendPrefix:(NSString *)prefix jsonField:(NSString *)name stringValue:(NSString *)value postfix:(NSString *)postfix;
+- (void) appendPrefix:(NSString *)prefix jsonField:(NSString *)name booleanValue:(Boolean)value postfix:(NSString *)postfix;
+- (void) appendPrefix:(NSString *)prefix jsonField:(NSString *)name integerValue:(NSInteger)value postfix:(NSString *)postfix;
 
-- (void) appendXmlElement:(NSString *)name stringValue:(NSString *)value;
-- (void) appendXmlElement:(NSString *)name booleanValue:(Boolean)value;
-- (void) appendXmlElement:(NSString *)name integerValue:(NSInteger)value;
+- (void) appendPrefix:(NSString *)prefix xmlElement:(NSString *)name stringValue:(NSString *)value;
+- (void) appendPrefix:(NSString *)prefix xmlElement:(NSString *)name booleanValue:(Boolean)value;
+- (void) appendPrefix:(NSString *)prefix xmlElement:(NSString *)name integerValue:(NSInteger)value;
 
-- (void) appendCsvStringValue:(NSString *)value;
-- (void) appendCsvBooleanValue:(Boolean)value;
-- (void) appendCsvIntegerValue:(NSInteger)value;
+- (void) appendCsvStringValue:(NSString *)value postfix:(NSString *)postfix;
+- (void) appendCsvBooleanValue:(Boolean)value postfix:(NSString *)postfix;
+- (void) appendCsvIntegerValue:(NSInteger)value postfix:(NSString *)postfix;
 
 @end
