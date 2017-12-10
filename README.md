@@ -1,7 +1,7 @@
 # byrthdays
 
 ## About
-Command line tool for macOS to to list people with birthdays from your contacts.
+Command line tool for macOS to list people with birthdays from your contacts either human readable or as JSON / XML / CSV.
 
 ## Install
 
@@ -37,4 +37,4 @@ Website: https://github.com/olfuerniss/byrthdays
 
 ```
 
-I use the JSON output in my byrthdays widget for [Übersicht](http://tracesof.net/uebersicht/)  (not released yet). Could also be used in [Alfred](https://www.alfredapp.com/) workflows or menu bar apps like [BitBar](https://getbitbar.com/).
+I use the JSON output in my [byrthdays widget](https://github.com/olfuerniss/byrthdays.widget) for [Übersicht](http://tracesof.net/uebersicht/). Could also be used in [Alfred](https://www.alfredapp.com/) workflows or menu bar apps like [BitBar](https://getbitbar.com/).
