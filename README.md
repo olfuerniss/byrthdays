@@ -6,7 +6,15 @@ Command line tool for macOS to list people with birthdays from your contacts eit
 ## Install
 
 ### Homebrew
-Comes later
+Not allowed to publish it at the moment. :-(
+
+```
+> brew audit --new-formula byrthdays
+byrthdays:
+* GitHub repository not notable enough (<20 forks, <20 watchers and <50 stars)
+* GitHub repository too new (<30 days old)
+Error: 2 problems in 1 formula
+```
 
 ### Manual installation
 1. Go to [Releases](https://github.com/olfuerniss/byrthdays/releases) and download the latest release
