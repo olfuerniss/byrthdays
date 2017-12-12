@@ -198,8 +198,8 @@ void help() {
     "  -g  to create grayscale thumbnails. Only in combination with '-t' \n"
     "  -h  prints this help \n"
     "\n"
-    "byrthdays v1.0.6 \n"
-    "Oliver Fürniß, 09/12/2017 \n"
+    "byrthdays v1.0.7 \n"
+    "Oliver Fürniß, 12/12/2017 \n"
     "Website: https://github.com/olfuerniss/byrthdays \n";
     
     nsprintf(help);
