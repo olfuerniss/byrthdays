@@ -26,6 +26,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AE04D93F1FDFCC130029E21D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AE38CBC61FCD667A005D1445 /* byrthdays */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = byrthdays; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE38CBC91FCD667A005D1445 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AE4CE6B91FCE95030094F0C1 /* BirthdayPerson.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BirthdayPerson.h; sourceTree = "<group>"; };
@@ -68,6 +69,7 @@
 		AE38CBC81FCD667A005D1445 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				AE04D93F1FDFCC130029E21D /* Info.plist */,
 				AE38CBC91FCD667A005D1445 /* main.m */,
 				AE6C41DD1FCDD5A900D60356 /* BirthdayPeople.h */,
 				AE6C41DE1FCDD5A900D60356 /* BirthdayPeople.m */,
@@ -110,7 +112,7 @@
 				TargetAttributes = {
 					AE38CBC51FCD667A005D1445 = {
 						CreatedOnToolsVersion = 9.1;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -252,18 +254,26 @@
 		AE38CBCE1FCD667A005D1445 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = K489N693F5;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "$(SRCROOT)/src/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = net.asator.byrthdays;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
 		AE38CBCF1FCD667A005D1445 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = K489N693F5;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "$(SRCROOT)/src/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = net.asator.byrthdays;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
