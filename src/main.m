@@ -89,6 +89,8 @@ void printJSON(NSArray *birthdayPeople, int thumbnailSize, bool grayscaleThumbna
     NSMutableString *resp = [[NSMutableString alloc] init];
     [resp appendString:@"["];
     [birthdayPeople enumerateObjectsUsingBlock:^(BirthdayPerson *person, NSUInteger idx, BOOL *stop) {
+        NSString *base64EncodedThumbnailImage = (thumbnailSize <= 0) ? nil : [person base64EncodedThumbnailImageWithMaximumWidthOrHeight:thumbnailSize grayscale:grayscaleThumbnail];
+        
         [resp appendString:@"\n\t{"];
         [resp appendPrefix:@"\n\t\t" jsonField:@"uid" stringValue:[person uniqueId] postfix:@","];
         [resp appendPrefix:@"\n\t\t" jsonField:@"me" booleanValue:[person me] postfix:@","];
@@ -99,7 +101,7 @@ void printJSON(NSArray *birthdayPeople, int thumbnailSize, bool grayscaleThumbna
         [resp appendPrefix:@"\n\t\t" jsonField:@"nextBirthdayDate" stringValue:[dateFormatter stringFromDate:[person nextBirthdayDate]] postfix:@","];
         [resp appendPrefix:@"\n\t\t" jsonField:@"age" integerValue:[person age] postfix:@","];
         [resp appendPrefix:@"\n\t\t" jsonField:@"daysToBirthday" integerValue:[person daysToBirthday] postfix:(thumbnailSize <= 0) ? nil : @","];
-        [resp appendPrefix:@"\n\t\t" jsonField:@"image" stringValue:(thumbnailSize <= 0) ? nil : [person base64EncodedThumbnailImageWithMaximumWidthOrHeight:thumbnailSize grayscale:grayscaleThumbnail] postfix:nil];
+        [resp appendPrefix:@"\n\t\t" jsonField:@"image" stringValue:((thumbnailSize <= 0) ? nil : (base64EncodedThumbnailImage == nil) ? @"" : base64EncodedThumbnailImage) postfix:nil];
         [resp appendString:@"\n\t}"];
         
         if(idx+1 < [birthdayPeople count]) {
@@ -116,6 +118,8 @@ void printXML(NSArray *birthdayPeople, int thumbnailSize, bool grayscaleThumbnai
     [resp appendString:@"\n<people>"];
     
     [birthdayPeople enumerateObjectsUsingBlock:^(BirthdayPerson *person, NSUInteger idx, BOOL *stop) {
+        NSString *base64EncodedThumbnailImage = (thumbnailSize <= 0) ? nil : [person base64EncodedThumbnailImageWithMaximumWidthOrHeight:thumbnailSize grayscale:grayscaleThumbnail];
+
         [resp appendString:@"\n\t<person>"];
         [resp appendPrefix:@"\n\t\t" xmlElement:@"uid" stringValue:[person uniqueId]];
         [resp appendPrefix:@"\n\t\t" xmlElement:@"me" booleanValue:[person me]];
@@ -126,7 +130,7 @@ void printXML(NSArray *birthdayPeople, int thumbnailSize, bool grayscaleThumbnai
         [resp appendPrefix:@"\n\t\t" xmlElement:@"next_birthday_date" stringValue:[dateFormatter stringFromDate:[person nextBirthdayDate]]];
         [resp appendPrefix:@"\n\t\t" xmlElement:@"age" integerValue:[person age]];
         [resp appendPrefix:@"\n\t\t" xmlElement:@"days_to_birthday" integerValue:[person daysToBirthday]];
-        [resp appendPrefix:@"\n\t\t" xmlElement:@"image" stringValue:(thumbnailSize <= 0) ? nil : [person base64EncodedThumbnailImageWithMaximumWidthOrHeight:thumbnailSize grayscale:grayscaleThumbnail]];
+        [resp appendPrefix:@"\n\t\t" xmlElement:@"image" stringValue:base64EncodedThumbnailImage];
         [resp appendString:@"\n\t</person>"];
     }];
     
@@ -151,6 +155,8 @@ void printCSV(NSArray *birthdayPeople, int thumbnailSize, bool grayscaleThumbnai
     
     // content
     [birthdayPeople enumerateObjectsUsingBlock:^(BirthdayPerson *person, NSUInteger idx, BOOL *stop) {
+        NSString *base64EncodedThumbnailImage = (thumbnailSize <= 0) ? nil : [person base64EncodedThumbnailImageWithMaximumWidthOrHeight:thumbnailSize grayscale:grayscaleThumbnail];
+
         [resp appendCsvStringValue:[person uniqueId] postfix:@", "];
         [resp appendCsvBooleanValue:[person me] postfix:@", "];
         [resp appendCsvStringValue:[person firstName] postfix:@", "];
@@ -160,7 +166,7 @@ void printCSV(NSArray *birthdayPeople, int thumbnailSize, bool grayscaleThumbnai
         [resp appendCsvStringValue:[dateFormatter stringFromDate:[person nextBirthdayDate]] postfix:@", "];
         [resp appendCsvIntegerValue:[person age] postfix:@", "];
         [resp appendCsvIntegerValue:[person daysToBirthday] postfix:(thumbnailSize <= 0) ? @"\n" : @", "];
-        [resp appendCsvStringValue:(thumbnailSize <= 0) ? nil : [person base64EncodedThumbnailImageWithMaximumWidthOrHeight:thumbnailSize grayscale:grayscaleThumbnail] postfix:@"\n"];
+        [resp appendCsvStringValue:((thumbnailSize <= 0) ? nil : (base64EncodedThumbnailImage == nil) ? @"" : base64EncodedThumbnailImage) postfix:@"\n"];
     }];
     
     nsprintf(@"%@", resp);
@@ -198,8 +204,8 @@ void help() {
     "  -g  to create grayscale thumbnails. Only in combination with '-t' \n"
     "  -h  prints this help \n"
     "\n"
-    "byrthdays v1.0.7 \n"
-    "Oliver Fürniß, 12/12/2017 \n"
+    "byrthdays v1.0.8 \n"
+    "Oliver Fürniß, 07/07/2018 \n"
     "Website: https://github.com/olfuerniss/byrthdays \n";
     
     nsprintf(help);
